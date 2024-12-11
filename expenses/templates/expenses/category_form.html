@@ -1,0 +1,54 @@
+{% extends "expenses/base.html" %} 
+
+{% block content %}
+
+<div class="container mt-5">
+  <h1 class="text-center mb-4">
+    {% if form.instance.pk %} Update Category {% else %} Create Category {% endif %}
+  </h1>
+
+  <!--FORM-->
+
+  <form
+    method="post"
+    action=""
+    class="w-50 mx-auto border p-4 shadow-sm rounded"
+  >
+    {% csrf_token %}
+    <!-- Display Form Fields with Bootstrap -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input
+        type="name"
+        class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+        id="title"
+        name="name"
+        value="{{ form.name.value|default:'' }}"
+        placeholder="Enter Category Name"
+        required
+      />
+      {% if form.name.errors %}
+      <div class="invalid-feedback">{{ form.name.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Category Description</label>
+        <textarea class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+                  id="description"
+                  name="description"
+                  placeholder="Enter task description"
+                  required>{{ form.description.value|default:'' }}</textarea>
+        {% if form.description.errors %}<div class="invalid-feedback">{{ form.description.errors.0 }}</div>{% endif %}
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100">Save</button>
+  </form>
+
+  <div class="text-center mt-3">
+    <a href="{% url 'category_list' %}" class="btn btn-link">Back to Category List</a>
+</div>
+</div>
+
+{% endblock %}

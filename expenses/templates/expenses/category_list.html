@@ -1,0 +1,31 @@
+{% extends "expenses/base.html" %}
+
+{% block content %}
+
+    <h1 class="text-center mb-4">Category List</h1>
+
+    <!-- Category List-->
+
+    <ul class="list-group">
+        {% for category in categories %}
+            <li class="list-group-item d-flex justify-content-between align-items-start {% if expense.completed %}border border-success text-black{% else %}border border-warning{% endif %}">
+                <!-- Task Details -->
+                <div class="ms-2 me-auto">
+                    <h4>
+                        <div class="fw-bold">{{ category.name }}</div>
+                    </h4>
+                    <p class="mb-1">{{ category.description }}</p> 
+        
+
+                </div>
+                <!-- Action Links -->
+                <div class="btn-group ms-3">
+                    <a href="{% url 'category_update' category.pk %}"
+                       class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="{% url 'category_delete' category.pk %}"
+                       class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock  %}

@@ -1,0 +1,42 @@
+{% extends "expenses/base.html" %}
+
+{% block content %}
+
+    <h1 class="text-center mb-4">Expense List</h1>
+
+    <div class="d-flex justify-content-between mb-4">
+        <a href="{% url 'expense_create' %}" class="btn btn-primary">Create a New Expense</a>
+        <a href="{% url 'category_create' %}" class="btn btn-primary">Create a New Category</a>
+    </div>
+
+    <!-- Expense List-->
+
+    <ul class="list-group">
+        {% for expense in expenses %}
+            <li class="list-group-item d-flex justify-content-between align-items-start {% if expense.completed %}border border-success text-black{% else %}border border-warning{% endif %}">
+                <!-- Task Details -->
+                <div class="ms-2 me-auto">
+                    <h4>
+                        <div class="fw-bold">{{ expense.title }}</div>
+                    </h4>
+                    {% comment %} <p class="mb-1">{{ expense.amount }}</p> {% endcomment %}
+                    <small>Amount: {{ expense.amount }}</small> |
+                    <small>Category: {{ expense.category }}</small> |
+                    <small>Date of Expense: {{expense.date_of_expense}}</small> |
+
+                </div>
+                <!-- Action Links -->
+                <div class="btn-group ms-3">
+                    <a href="{% url 'expense_detail' expense.pk %}"
+                       class="btn btn-sm btn-outline-secondary">View</a>
+                    <a href="{% url 'expense_update' expense.pk %}"
+                       class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="{% url 'expense_delete' expense.pk %}"
+                       class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    
+{% endblock  %}

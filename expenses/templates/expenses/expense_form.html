@@ -1,0 +1,80 @@
+{% extends "expenses/base.html" %} 
+
+{% block content %}
+
+<div class="container mt-5">
+  <h1 class="text-center mb-4">
+    {% if form.instance.pk %} Update Expense {% else %} Create Expense {% endif %}
+  </h1>
+
+  <!--FORM-->
+
+  <form
+    method="post"
+    action=""
+    class="w-50 mx-auto border p-4 shadow-sm rounded"
+  >
+    {% csrf_token %}
+    <!-- Display Form Fields with Bootstrap -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Title:</label>
+      <input
+        type="text"
+        class="form-control {% if form.title.errors %}is-invalid{% endif %}"
+        id="title"
+        name="title"
+        value="{{ form.title.value|default:'' }}"
+        placeholder="Enter Expense title"
+        required
+      />
+      {% if form.title.errors %}
+      <div class="invalid-feedback">{{ form.title.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="amount" class="form-label">Amount:</label>
+      <input
+        type="number"
+        class="form-control {% if form.amount.errors %}is-invalid{% endif %}"
+        id="amount"
+        name="amount"
+        value="{{ form.amount.value|default:'' }}"
+        placeholder="Enter amount"
+        required
+      />
+      {% if form.amount.errors %}
+      <div class="invalid-feedback">{{ form.amount.errors.0 }}</div>
+      {% endif %}
+    </div>
+    
+    <!-- Category Dropdown -->
+    <div class="mb-3">
+      <label for="category" class="form-label">Categories:</label>
+      {{ form.category}}
+      <!-- Render categories as a dropdown -->
+    </div>
+
+    <!-- Date of Expense Field -->
+    <div class="mb-3">
+      <label for="date_of_expense" class="form-label">Date of Expense:</label>
+      <input
+        type="date"
+        class="form-control"
+        id="date_of_expense"
+        name="date_of_expense"
+        value="{{ form.date_of_expense.value }}"
+        required
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100">Save</button>
+  </form>
+
+  <div class="text-center mt-3">
+    <a href="{% url 'expense_list' %}" class="btn btn-link">Back to List</a>
+</div>
+</div>
+
+{% endblock %}
