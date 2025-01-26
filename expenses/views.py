@@ -165,7 +165,7 @@ def expense_detail(request,pk):
 # ---------------------
 @login_required
 def category_list(request):
-    categories = Category.objects.all()
+    categories = Category.objects.filter(user=request.user)
     return render(request,"expenses/category_list.html",{"categories":categories})
 
 # -------------------
